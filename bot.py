@@ -410,4 +410,10 @@ def main():
 
 if name == "__main__":
     port = int(os.environ.get('PORT', 10000))
-    app.run(host='0.0.0.0', port=port)
+    
+    # Запуск Flask в отдельном потоке (если нужен)
+    threading.Thread(target=lambda: app.run(host='0.0.0.0', port=port, debug=False, use_reloader=False)).start()
+    
+    # Запуск Telegram бота
+    print("Bot starting...")
+    application.run_polling()
